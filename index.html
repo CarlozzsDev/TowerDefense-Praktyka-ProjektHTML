@@ -21,6 +21,13 @@
   <!-- 2. WYBÓR MAPY -->
   <section id="ekran-wybor-mapy" class="ekran ukryty">
     <h2>Wybierz mapę</h2>
+    
+    <div class="pole-nicku">
+      <label for="input-nick">Twój nick:</label>
+      <input type="text" id="input-nick" placeholder="Wpisz nazwę gracza..." maxlength="15">
+      <small id="blad-nicku" class="ukryty">Wpisz nick przed rozpoczęciem gry!</small>
+    </div>
+
     <div id="lista-map">
       <button class="btn-mapa" data-mapa="data/maps/mapa1.json">Mapa 1: Testowa</button>
       <button class="btn-mapa" data-mapa="data/maps/mapa2.json">Mapa 2: Średnia</button>

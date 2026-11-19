@@ -1,20 +1,25 @@
 import { MapaGry } from "./tekstury.js";
+import { Renderer } from "./render.js";
 import { pobierzWyniki } from "./storage.js";
 
-const KOLORY_ZASTEPCZE = {
-  0: "#3a7d44", // trawa
-  1: "#c2b280", // ścieżka
-  2: "#6c757d", // miejsce na wieżyczkę
-  3: "#2b9348", // start
-  4: "#d90429"  // baza
-};
-
-const canvas = document.getElementById("plansza");
-const ctx = canvas.getContext("2d");
-
+const plansza = document.getElementById("plansza");
 const mapa = new MapaGry();
-let najechanyKafelek = null;
-let animationFrameId = null;
+const rysownik = new Renderer(plansza);
+let idKlatkiAnimacji = null;
+
+// Zmienne sterujące czasem, pauzą i prędkością gry
+let czasOstatniejKlatki = 0;
+let czyPauza = false;
+let mnoznikPredkosci = 1; // 1 = normalna prędkość, 2 = przyspieszenie x2
+
+// Zmienne i elementy do obsługi nicku gracza
+let aktualnyGracz = localStorage.getItem("td_ostatni_nick") || "";
+const poleNicku = document.getElementById("input-nick");
+const komunikatBleduNicku = document.getElementById("blad-nicku");
+
+if (poleNicku) {
+  poleNicku.value = aktualnyGracz;
+}
 
 // Przełączanie widocznych ekranów
 function pokazEkran(idEkranu) {
@@ -26,91 +31,104 @@ function pokazEkran(idEkranu) {
 
 // Odświeżanie tabeli wyników z localStorage
 function odswiezTabeleWynikow() {
-  const tbody = document.getElementById("lista-wynikow");
+  const cialoTabeli = document.getElementById("lista-wynikow");
   const wyniki = pobierzWyniki();
-  tbody.innerHTML = "";
+  cialoTabeli.innerHTML = "";
 
   if (wyniki.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='3'>Brak zapisanych wyników</td></tr>";
+    cialoTabeli.innerHTML = "<tr><td colspan='3'>Brak zapisanych wyników</td></tr>";
     return;
   }
 
   wyniki.forEach(wpis => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${wpis.gracz}</td><td>${wpis.mapa}</td><td>${wpis.wynik}</td>`;
-    tbody.appendChild(tr);
+    const wiersz = document.createElement("tr");
+    const komorkaGracz = document.createElement("td");
+    const komorkaMapa = document.createElement("td");
+    const komorkaWynik = document.createElement("td");
+
+    komorkaGracz.textContent = wpis.gracz;
+    komorkaMapa.textContent = wpis.mapa;
+    komorkaWynik.textContent = wpis.wynik;
+
+    wiersz.append(komorkaGracz, komorkaMapa, komorkaWynik);
+    cialoTabeli.appendChild(wiersz);
   });
 }
 
-// Dopasowanie rozmiaru Canvasu do wczytanej mapy
-function dopasujCanvasDoMapy(mapaObj) {
-  const rozmiarKafelka = mapaObj.RozmiarMap;
-  canvas.width = mapaObj.grid[0].length * rozmiarKafelka;
-  canvas.height = mapaObj.grid.length * rozmiarKafelka;
+// Aktualizacja logiki gry (ruch wrogów, strzelanie wież itp.)
+function aktualizujGre(deltaTime) {
+  if (deltaTime === 0) return; // Gdy jest pauza, logika stoi w miejscu
+
+  // Tutaj w kolejnych krokach dojdą wywołania:
+  // menedzerFal.aktualizuj(deltaTime);
+  // przeciwnicy.forEach(wrog => wrog.aktualizuj(deltaTime));
+  // wieze.forEach(wieza => wieza.aktualizuj(deltaTime));
 }
 
-// Rysowanie mapy na Canvasie
-function rysujMape(mapaObj) {
-  const size = mapaObj.RozmiarMap;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+// Główna pętla gry z obliczaniem deltaTime
+function petlaGry(aktualnyCzas) {
+  // Oblicz różnicę czasu w sekundach (ograniczoną do max 0.1s przy zmianie karty)
+  const surowyDeltaTime = Math.min((aktualnyCzas - czasOstatniejKlatki) / 1000, 0.1);
+  czasOstatniejKlatki = aktualnyCzas;
 
-  for (let y = 0; y < mapaObj.grid.length; y++) {
-    for (let x = 0; x < mapaObj.grid[y].length; x++) {
-      const typ = mapaObj.grid[y][x];
-      const texSrc = mapaObj.textureGrid[y][x];
-      const img = texSrc ? mapaObj.loadedImages[texSrc] : null;
+  // Jeśli pauza jest aktywna, deltaTime wynosi 0; w przeciwnym razie uwzględnia 1x lub 2x
+  const deltaTime = czyPauza ? 0 : surowyDeltaTime * mnoznikPredkosci;
 
-      if (img) {
-        ctx.drawImage(img, x * size, y * size, size, size);
-      } else {
-        ctx.fillStyle = KOLORY_ZASTEPCZE[typ] || "#000";
-        ctx.fillRect(x * size, y * size, size, size);
-      }
+  aktualizujGre(deltaTime);
+  rysownik.RysujMape(mapa);
 
-      // Podświetlenie pola budowy po najechaniu myszką
-      if (
-        najechanyKafelek &&
-        najechanyKafelek.x === x &&
-        najechanyKafelek.y === y &&
-        typ === 2
-      ) {
-        ctx.strokeStyle = "#ffd700";
-        ctx.lineWidth = 3;
-        ctx.strokeRect(x * size + 1.5, y * size + 1.5, size - 3, size - 3);
-      }
-    }
-  }
-}
-
-// Główna pętla renderująca
-function petlaGry() {
-  rysujMape(mapa);
-  animationFrameId = requestAnimationFrame(petlaGry);
+  idKlatkiAnimacji = requestAnimationFrame(petlaGry);
 }
 
 // Wczytanie i start wybranej mapy
 async function uruchomMape(sciezkaMapy) {
-  if (animationFrameId) cancelAnimationFrame(animationFrameId);
+  if (idKlatkiAnimacji) cancelAnimationFrame(idKlatkiAnimacji);
+
+  // Reset stanu pauzy i prędkości przy starcie nowej mapy
+  czyPauza = false;
+  mnoznikPredkosci = 1;
+  document.getElementById("btn-pauza").textContent = "Pauza";
+  document.getElementById("btn-przyspieszenie").textContent = "×2";
+
   await mapa.load(sciezkaMapy);
-  dopasujCanvasDoMapy(mapa);
+  rysownik.RozmiarDoMapy(mapa);
   pokazEkran("ekran-gra");
-  petlaGry();
+
+  // Pierwsze wywołanie przez requestAnimationFrame ustawia poprawny czas startowy
+  idKlatkiAnimacji = requestAnimationFrame((czasStartu) => {
+    czasOstatniejKlatki = czasStartu;
+    petlaGry(czasStartu);
+  });
 }
 
 // Obsługa myszy na Canvasie
-canvas.addEventListener("mousemove", (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
-  najechanyKafelek = mapa.getTileAt(mouseX, mouseY);
+plansza.addEventListener("mousemove", (zdarzenie) => {
+  const granicePlanszy = plansza.getBoundingClientRect();
+  const kursorX = zdarzenie.clientX - granicePlanszy.left;
+  const kursorY = zdarzenie.clientY - granicePlanszy.top;
+  rysownik.hoveredTile = mapa.getTileAt(kursorX, kursorY);
 });
 
-canvas.addEventListener("click", (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const tile = mapa.getTileAt(e.clientX - rect.left, e.clientY - rect.top);
-  if (tile && tile.type === 2) {
-    console.log(`Kliknięto slot na wieżyczkę na pozycji X:${tile.x}, Y:${tile.y}`);
+plansza.addEventListener("click", (zdarzenie) => {
+  const granicePlanszy = plansza.getBoundingClientRect();
+  const kliknietyKafelek = mapa.getTileAt(
+    zdarzenie.clientX - granicePlanszy.left,
+    zdarzenie.clientY - granicePlanszy.top
+  );
+  if (kliknietyKafelek && kliknietyKafelek.type === 2) {
+    console.log(`Kliknięto slot na wieżyczkę na pozycji X:${kliknietyKafelek.x}, Y:${kliknietyKafelek.y}`);
   }
+});
+
+// Obsługa przycisków HUD w trakcie gry (Pauza i Przyspieszenie)
+document.getElementById("btn-pauza").addEventListener("click", (zdarzenie) => {
+  czyPauza = !czyPauza;
+  zdarzenie.target.textContent = czyPauza ? "Wznów" : "Pauza";
+});
+
+document.getElementById("btn-przyspieszenie").addEventListener("click", (zdarzenie) => {
+  mnoznikPredkosci = mnoznikPredkosci === 1 ? 2 : 1;
+  zdarzenie.target.textContent = mnoznikPredkosci === 2 ? "×1" : "×2";
 });
 
 // Obsługa przycisków menu
@@ -127,17 +145,30 @@ document.getElementById("btn-instrukcja").addEventListener("click", () => {
   pokazEkran("ekran-instrukcja");
 });
 
-document.querySelectorAll(".btn-powrot").forEach(btn => {
-  btn.addEventListener("click", () => pokazEkran("ekran-menu"));
+document.querySelectorAll(".btn-powrot").forEach(przycisk => {
+  przycisk.addEventListener("click", () => pokazEkran("ekran-menu"));
 });
 
 document.getElementById("btn-wyjdz-z-gry").addEventListener("click", () => {
-  if (animationFrameId) cancelAnimationFrame(animationFrameId);
+  if (idKlatkiAnimacji) cancelAnimationFrame(idKlatkiAnimacji);
   pokazEkran("ekran-menu");
 });
 
-document.querySelectorAll(".btn-mapa").forEach(btn => {
-  btn.addEventListener("click", () => {
-    uruchomMape(btn.dataset.mapa);
+// Sprawdzanie nicku przed startem mapy
+document.querySelectorAll(".btn-mapa").forEach(przycisk => {
+  przycisk.addEventListener("click", () => {
+    const wpisanyNick = poleNicku.value.trim();
+
+    if (!wpisanyNick) {
+      komunikatBleduNicku.classList.remove("ukryty");
+      poleNicku.focus();
+      return;
+    }
+
+    komunikatBleduNicku.classList.add("ukryty");
+    aktualnyGracz = wpisanyNick;
+    localStorage.setItem("td_ostatni_nick", aktualnyGracz);
+
+    uruchomMape(przycisk.dataset.mapa);
   });
 });

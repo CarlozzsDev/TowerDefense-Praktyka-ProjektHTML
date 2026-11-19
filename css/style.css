@@ -6,7 +6,7 @@
   --ramka-ciemna: #0e100d;
   --ramka-jasna: #464e42;
   --akcent-zloto: #d4a338;
-  --akcent-zieleń: #588157;
+  --akcent-zielen: #588157;
   --tekst-glowny: #e6e4dd;
   --tekst-wyciszony: #9aa095;
 }
@@ -206,7 +206,7 @@ tr:nth-child(even) td {
 }
 
 #btn-nastepna-fala:hover {
-  background-color: var(--akcent-zieleń);
+  background-color: var(--akcent-zielen);
 }
 
 /* Obszar gry: Canvas + Panel sklepu */
@@ -233,4 +233,40 @@ tr:nth-child(even) td {
   box-shadow: inset 0 0 0 1px var(--ramka-jasna), 6px 6px 0px rgba(0, 0, 0, 0.45);
   font-size: 14px;
   color: var(--tekst-wyciszony);
+}
+.pole-nicku {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 280px;
+  background-color: var(--bg-panel);
+  padding: 16px 20px;
+  border: 2px solid var(--ramka-ciemna);
+  box-shadow: inset 0 0 0 1px var(--ramka-jasna), 6px 6px 0px rgba(0, 0, 0, 0.45);
+}
+
+.pole-nicku label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--akcent-zloto);
+  font-weight: 600;
+}
+
+.pole-nicku input {
+  padding: 10px 12px;
+  font-size: 15px;
+  background-color: #161815;
+  color: var(--tekst-glowny);
+  border: 2px solid var(--ramka-ciemna);
+  outline: none;
+}
+
+.pole-nicku input:focus {
+  border-color: var(--akcent-zloto);
+}
+
+#blad-nicku {
+  color: #e05252;
+  font-size: 13px;
 }

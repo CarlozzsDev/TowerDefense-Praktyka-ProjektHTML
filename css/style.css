@@ -222,10 +222,26 @@ tr:nth-child(even) td {
   background-color: #111;
   image-rendering: pixelated;
   cursor: crosshair;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 300px);
+  max-height: calc(100vh - 120px);
+}
+
+#ekran-gra {
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 12px;
+}
+
+#obszar-gry {
+  width: 100%;
+  justify-content: center;
 }
 
 #panel-sklepu {
   width: 240px;
+  flex-shrink: 0;
   min-height: 320px;
   background-color: var(--bg-panel);
   padding: 16px;
@@ -234,6 +250,28 @@ tr:nth-child(even) td {
   font-size: 14px;
   color: var(--tekst-wyciszony);
 }
+
+@media (max-width: 760px) {
+  #ekran-gra {
+    overflow-y: auto;
+  }
+
+  #obszar-gry {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #plansza {
+    max-width: calc(100vw - 36px);
+    max-height: calc(100vh - 240px);
+  }
+
+  #panel-sklepu {
+    width: min(100%, 480px);
+    min-height: 0;
+  }
+}
+
 .pole-nicku {
   display: flex;
   flex-direction: column;

@@ -65,6 +65,17 @@ function aktualizujGre(deltaTime) {
   // wieze.forEach(wieza => wieza.aktualizuj(deltaTime));
 }
 
+function pobierzPozycjeNaPlanszy(zdarzenie) {
+  const granicePlanszy = plansza.getBoundingClientRect();
+  const skalaX = plansza.width / plansza.clientWidth;
+  const skalaY = plansza.height / plansza.clientHeight;
+
+  return {
+    x: (zdarzenie.clientX - granicePlanszy.left - plansza.clientLeft) * skalaX,
+    y: (zdarzenie.clientY - granicePlanszy.top - plansza.clientTop) * skalaY
+  };
+}
+
 // Główna pętla gry z obliczaniem deltaTime
 function petlaGry(aktualnyCzas) {
   // Oblicz różnicę czasu w sekundach (ograniczoną do max 0.1s przy zmianie karty)
@@ -103,18 +114,13 @@ async function uruchomMape(sciezkaMapy) {
 
 // Obsługa myszy na Canvasie
 plansza.addEventListener("mousemove", (zdarzenie) => {
-  const granicePlanszy = plansza.getBoundingClientRect();
-  const kursorX = zdarzenie.clientX - granicePlanszy.left;
-  const kursorY = zdarzenie.clientY - granicePlanszy.top;
-  rysownik.hoveredTile = mapa.getTileAt(kursorX, kursorY);
+  const pozycja = pobierzPozycjeNaPlanszy(zdarzenie);
+  rysownik.hoveredTile = mapa.getTileAt(pozycja.x, pozycja.y);
 });
 
 plansza.addEventListener("click", (zdarzenie) => {
-  const granicePlanszy = plansza.getBoundingClientRect();
-  const kliknietyKafelek = mapa.getTileAt(
-    zdarzenie.clientX - granicePlanszy.left,
-    zdarzenie.clientY - granicePlanszy.top
-  );
+  const pozycja = pobierzPozycjeNaPlanszy(zdarzenie);
+  const kliknietyKafelek = mapa.getTileAt(pozycja.x, pozycja.y);
   if (kliknietyKafelek && kliknietyKafelek.type === 2) {
     console.log(`Kliknięto slot na wieżyczkę na pozycji X:${kliknietyKafelek.x}, Y:${kliknietyKafelek.y}`);
   }

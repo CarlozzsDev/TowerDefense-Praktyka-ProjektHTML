@@ -1,0 +1,236 @@
+:root {
+  --bg-glowne: #181a17;
+  --bg-panel: #222520;
+  --bg-przycisk: #2d332a;
+  --bg-przycisk-hover: #394235;
+  --ramka-ciemna: #0e100d;
+  --ramka-jasna: #464e42;
+  --akcent-zloto: #d4a338;
+  --akcent-zieleń: #588157;
+  --tekst-glowny: #e6e4dd;
+  --tekst-wyciszony: #9aa095;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-glowne);
+  /* Subtelna siatka techniczna w tle zamiast gładkiego jednolitego koloru */
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--tekst-glowny);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+}
+
+.ukryty {
+  display: none !important;
+}
+
+/* Układ ekranów */
+.ekran {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  gap: 24px;
+}
+
+/* Nagłówki w stylu tablicy taktycznej */
+h1 {
+  font-size: 2.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--tekst-glowny);
+  border-bottom: 3px solid var(--akcent-zloto);
+  padding-bottom: 8px;
+  text-shadow: 2px 2px 0px var(--ramka-ciemna);
+}
+
+h2 {
+  font-size: 1.5rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--akcent-zloto);
+}
+
+h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--tekst-wyciszony);
+  border-bottom: 1px solid var(--ramka-jasna);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+/* Kontenery przycisków */
+.przyciski-menu,
+#lista-map {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 280px;
+  background-color: var(--bg-panel);
+  padding: 20px;
+  border: 2px solid var(--ramka-ciemna);
+  box-shadow: inset 0 0 0 1px var(--ramka-jasna), 6px 6px 0px rgba(0, 0, 0, 0.45);
+}
+
+/* Przyciski z fizycznym efektem wciśnięcia */
+button {
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--tekst-glowny);
+  background-color: var(--bg-przycisk);
+  border: 2px solid var(--ramka-ciemna);
+  box-shadow: inset 0 2px 0 var(--ramka-jasna), 0 3px 0 var(--ramka-ciemna);
+  transition: background-color 0.1s ease, transform 0.05s ease;
+}
+
+button:hover {
+  background-color: var(--bg-przycisk-hover);
+  border-color: var(--akcent-zloto);
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 1px 0 var(--ramka-ciemna);
+}
+
+.btn-powrot {
+  width: 280px;
+  background-color: #262220;
+  color: var(--tekst-wyciszony);
+}
+
+.btn-powrot:hover {
+  color: var(--tekst-glowny);
+}
+
+/* Tabela wyników */
+table {
+  border-collapse: collapse;
+  width: 460px;
+  background-color: var(--bg-panel);
+  border: 2px solid var(--ramka-ciemna);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+th {
+  background-color: #161815;
+  color: var(--akcent-zloto);
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--ramka-ciemna);
+}
+
+td {
+  padding: 10px 16px;
+  border-bottom: 1px solid #2e332c;
+  font-size: 14px;
+}
+
+tr:nth-child(even) td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Ekran instrukcji */
+.tresc-instrukcji {
+  max-width: 520px;
+  background-color: var(--bg-panel);
+  padding: 24px;
+  border: 2px solid var(--ramka-ciemna);
+  border-left: 4px solid var(--akcent-zloto);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.45);
+  line-height: 1.65;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 15px;
+}
+
+/* Górny pasek stanu (HUD) */
+#hud-gorny {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  background-color: var(--bg-panel);
+  padding: 10px 18px;
+  border: 2px solid var(--ramka-ciemna);
+  box-shadow: inset 0 0 0 1px var(--ramka-jasna), 4px 4px 0px rgba(0, 0, 0, 0.45);
+}
+
+#hud-gorny span {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--tekst-wyciszony);
+  padding: 4px 10px;
+  background-color: #161815;
+  border: 1px solid #32382f;
+  font-variant-numeric: tabular-nums;
+}
+
+#hud-gorny strong {
+  color: var(--akcent-zloto);
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+#hud-gorny button {
+  padding: 7px 12px;
+  font-size: 13px;
+}
+
+#btn-nastepna-fala {
+  background-color: #2f4d2e;
+  border-color: #182918;
+}
+
+#btn-nastepna-fala:hover {
+  background-color: var(--akcent-zieleń);
+}
+
+/* Obszar gry: Canvas + Panel sklepu */
+#obszar-gry {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+#plansza {
+  border: 3px solid var(--ramka-ciemna);
+  box-shadow: 0 0 0 1px var(--ramka-jasna), 6px 6px 0px rgba(0, 0, 0, 0.5);
+  background-color: #111;
+  image-rendering: pixelated;
+  cursor: crosshair;
+}
+
+#panel-sklepu {
+  width: 240px;
+  min-height: 320px;
+  background-color: var(--bg-panel);
+  padding: 16px;
+  border: 2px solid var(--ramka-ciemna);
+  box-shadow: inset 0 0 0 1px var(--ramka-jasna), 6px 6px 0px rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  color: var(--tekst-wyciszony);
+}

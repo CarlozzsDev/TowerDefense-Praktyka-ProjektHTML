@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Tower Defense</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/gra.js"></script>
+</head>
+<body>
+
+  <!-- 1. MENU GŁÓWNE -->
+  <section id="ekran-menu" class="ekran">
+    <h1>Tower Defense</h1>
+    <div class="przyciski-menu">
+      <button id="btn-wybor-mapy">Wybór mapy</button>
+      <button id="btn-tabela-wynikow">Tabela wyników</button>
+      <button id="btn-instrukcja">Instrukcja</button>
+    </div>
+  </section>
+
+  <!-- 2. WYBÓR MAPY -->
+  <section id="ekran-wybor-mapy" class="ekran ukryty">
+    <h2>Wybierz mapę</h2>
+    <div id="lista-map">
+      <button class="btn-mapa" data-mapa="data/maps/mapa1.json">Mapa 1: Testowa</button>
+      <button class="btn-mapa" data-mapa="data/maps/mapa2.json">Mapa 2: Średnia</button>
+      <button class="btn-mapa" data-mapa="data/maps/mapa3.json">Mapa 3: Trudna</button>
+    </div>
+    <button class="btn-powrot">Powrót do menu</button>
+  </section>
+
+  <!-- 3. TABELA WYNIKÓW -->
+  <section id="ekran-wyniki" class="ekran ukryty">
+    <h2>Tabela najlepszych wyników</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Gracz</th>
+          <th>Mapa</th>
+          <th>Wynik</th>
+        </tr>
+      </thead>
+      <tbody id="lista-wynikow"></tbody>
+    </table>
+    <button class="btn-powrot">Powrót do menu</button>
+  </section>
+
+  <!-- 4. INSTRUKCJA -->
+  <section id="ekran-instrukcja" class="ekran ukryty">
+    <h2>Instrukcja</h2>
+    <div class="tresc-instrukcji">
+      <p>Broń bazy przed falami przeciwników, którzy idą ścieżką od startu do bazy (20 żyć na start).</p>
+      <p>Za złoto stawiaj i ulepszaj wieże na wyznaczonych polach budowy.</p>
+      <p>Dobieraj wieże do rodzaju zagrożenia (np. wrogów latających trafiają tylko wybrane wieże).</p>
+    </div>
+    <button class="btn-powrot">Powrót do menu</button>
+  </section>
+
+  <!-- 5. EKRAN GRY -->
+  <section id="ekran-gra" class="ekran ukryty">
+    <div id="hud-gorny">
+      <span>Fala: <strong id="licznik-fal">1/15</strong></span>
+      <span>Złoto: <strong id="licznik-zlota">150</strong></span>
+      <span>Życia: <strong id="licznik-zyc">20</strong></span>
+      <button id="btn-nastepna-fala">Następna fala</button>
+      <button id="btn-pauza">Pauza</button>
+      <button id="btn-przyspieszenie">×2</button>
+      <button id="btn-wyjdz-z-gry">Menu</button>
+    </div>
+
+    <div id="obszar-gry">
+      <canvas id="plansza"></canvas>
+      <aside id="panel-sklepu">
+        <h3>Wieże</h3>
+        <p>Wybierz pole budowy na mapie.</p>
+      </aside>
+    </div>
+  </section>
+
+</body>
+</html>

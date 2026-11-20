@@ -1,21 +1,29 @@
 export const TEKSTURY_KAFELKOW = {
   0: [ // background (trawa/tło)
     "data/kafelki/grass_1.png",
-    "data/kafelki/grass_flowers.png"
+    "data/kafelki/grass_2.png",
+    "data/kafelki/grass_3.png",
+    "data/kafelki/grass_1.png",
+    "data/kafelki/grass_2.png",
+    "data/kafelki/grass_3.png",
+    "data/kafelki/grass_flowers.png",
+    "data/kafelki/grass_flowers_2.png"
   ],
   1: [ // ścieżka
     "data/kafelki/path_1.png",
-    "data/kafelki/path_pebbles.png"
+    "data/kafelki/path_pebbles.png",
+    "data/kafelki/path_pebbles_2.png",
+    "data/kafelki/path_pebbles_3.png"
   ],
   2: [ // miejsce na wieżyczkę
     "data/kafelki/slot_1.png",
     "data/kafelki/slot_2.png"
   ],
   3: [ // start
-    "data/kafelki/path_1.png"
+    "data/kafelki/start1.png"
   ],
   4: [ // baza
-    "data/kafelki/path_1.png"
+    "data/kafelki/end1.png"
   ]
 };
 

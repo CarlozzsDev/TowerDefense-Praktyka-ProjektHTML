@@ -42,9 +42,9 @@ export class Renderer {
           this.hoveredTile.y === y &&
           typ === 2
         ) {
-          this.ctx.strokeStyle = "#ffd700";
-          this.ctx.lineWidth = 3;
-          this.ctx.strokeRect(x * size + 1.5, y * size + 1.5, size - 3, size - 3);
+          this.ctx.strokeStyle = "#f10404";
+          this.ctx.lineWidth = 5;
+          this.ctx.strokeRect(x * size + 2, y * size + 2, size - 3, size - 3);
         }
       }
     }

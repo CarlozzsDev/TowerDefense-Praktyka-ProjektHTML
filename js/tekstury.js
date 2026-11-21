@@ -1,5 +1,5 @@
-export const TEKSTURY_KAFELKOW = {
-  0: [ // background (trawa/tło)
+const TEKSTURY_KAFELKOW = {
+  0: [
     "data/kafelki/grass_1.png",
     "data/kafelki/grass_2.png",
     "data/kafelki/grass_3.png",
@@ -9,44 +9,67 @@ export const TEKSTURY_KAFELKOW = {
     "data/kafelki/grass_flowers.png",
     "data/kafelki/grass_flowers_2.png"
   ],
-  1: [ // ścieżka
+  1: [
     "data/kafelki/path_1.png",
     "data/kafelki/path_pebbles.png",
     "data/kafelki/path_pebbles_2.png",
     "data/kafelki/path_pebbles_3.png"
   ],
-  2: [ // miejsce na wieżyczkę
+  2: [
     "data/kafelki/slot_1.png",
     "data/kafelki/slot_2.png"
   ],
-  3: [ // start
+  3: [
     "data/kafelki/start1.png"
   ],
-  4: [ // baza
+  4: [
     "data/kafelki/end1.png"
   ]
 };
 
-export class MapaGry {
+async function wczytajJsonZFallbackiem(url) {
+  if (window.location.protocol !== "file:") {
+    try {
+      const odpowiedz = await fetch(url, { cache: "no-store" });
+      if (odpowiedz.ok) {
+        const tekst = await odpowiedz.text();
+        if (tekst.trim()) {
+          return JSON.parse(tekst);
+        }
+      }
+    } catch {
+      // Fallback do danych lokalnych
+    }
+  }
+
+  if (window.DANE_LOKALNE_TD && window.DANE_LOKALNE_TD[url]) {
+    return JSON.parse(JSON.stringify(window.DANE_LOKALNE_TD[url]));
+  }
+
+  throw new Error(`Nie udało się wczytać pliku ${url}`);
+}
+
+class MapaGry {
   constructor() {
     this.id = "";
     this.name = "";
     this.RozmiarMap = 64;
     this.grid = [];
     this.punkty = [];
-    this.textureGrid = []; // Zapamiętuje wylosowaną teksturę dla każdego pola
-    this.loadedImages = {}; // Pamięć podręczna załadowanych obiektów Image
+    this.fale = [];
+    this.textureGrid = [];
+    this.loadedImages = {};
   }
 
   async load(mapUrl) {
-    const odpowiedz = await fetch(mapUrl);
-    const dane = await odpowiedz.json();
+    const dane = await wczytajJsonZFallbackiem(mapUrl);
 
     this.id = dane.id;
     this.name = dane.name;
     this.RozmiarMap = dane.RozmiarMap || dane.tileSize || 64;
     this.grid = dane.grid;
     this.punkty = dane.punkty || [];
+    this.fale = dane.fale || [];
 
     await this.preloadTeksturMap();
     this.generujLosowaTeksturaGridu();
@@ -63,7 +86,6 @@ export class MapaGry {
           resolve();
         };
         img.onerror = () => {
-          // Jeśli brakuje pliku PNG, nie blokuje gry (narysuje kolor zastępczy)
           resolve();
         };
       });

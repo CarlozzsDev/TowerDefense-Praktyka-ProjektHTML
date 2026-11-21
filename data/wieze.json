@@ -1,0 +1,106 @@
+{
+  "Standard": {
+    "id": "Standard",
+    "nazwa": "Standard",
+    "opis": "Szybko strzela w jeden cel naziemny. Nie trafia latających.",
+    "koszt": 50,
+    "obrazenia": 8,
+    "szybkoscStrzalu": 2.0,
+    "zasieg": 2.5,
+    "trafialatajacych": false,
+    "kolor": "#3b82f6",
+    "tekstura": "data/wieze/standard.gif",
+    "teksturaPocisku": "data/pociski/standard.png",
+    "ulepszenia": [
+      {
+        "opis": "Obrażenia: 8 -> 12",
+        "koszt": 40,
+        "obrazenia": 12
+      },
+      {
+        "opis": "Szybkość: 2.0 -> 3.0 strz./s",
+        "koszt": 70,
+        "szybkoscStrzalu": 3.0
+      }
+    ]
+  },
+  "Heavy": {
+    "id": "Heavy",
+    "nazwa": "Heavy",
+    "opis": "Wolne strzały oraz duże obrażenia obszarowe (1 kafelek).",
+    "koszt": 120,
+    "obrazenia": 40,
+    "szybkoscStrzalu": 0.5,
+    "zasieg": 2.0,
+    "zasiegObszarowy": 1.0,
+    "trafialatajacych": false,
+    "kolor": "#ef4444",
+    "tekstura": "data/wieze/heavy.gif",
+    "teksturaPocisku": "data/pociski/heavy.png",
+    "ulepszenia": [
+      {
+        "opis": "Obszar wybuchu: 1.0 -> 1.5 kafelka",
+        "koszt": 90,
+        "zasiegObszarowy": 1.5
+      },
+      {
+        "opis": "Obrażenia: 40 -> 70",
+        "koszt": 150,
+        "obrazenia": 70
+      }
+    ]
+  },
+  "Slow": {
+    "id": "Slow",
+    "nazwa": "Slow",
+    "opis": "Spowalnia wrogów (30% na 2s). Trafia latających.",
+    "koszt": 80,
+    "obrazenia": 3,
+    "szybkoscStrzalu": 1.0,
+    "zasieg": 2.0,
+    "spowolnienie": 0.3,
+    "czasSpowolnienia": 2.0,
+    "trafialatajacych": true,
+    "kolor": "#38bdf8",
+    "tekstura": "data/wieze/slow.gif",
+    "teksturaPocisku": "data/pociski/slow.png",
+    "ulepszenia": [
+      {
+        "opis": "Spowolnienie: 30% -> 50%",
+        "koszt": 60,
+        "spowolnienie": 0.5
+      },
+      {
+        "opis": "Zasięg: 2.0 -> 3.0 kafelka",
+        "koszt": 100,
+        "zasieg": 3.0
+      }
+    ]
+  },
+  "Snajper": {
+    "id": "Snajper",
+    "nazwa": "Snajper",
+    "opis": "Duży zasięg, wolny strzał oraz duże obrażenia. Trafia latających.",
+    "koszt": 150,
+    "obrazenia": 60,
+    "szybkoscStrzalu": 0.33,
+    "zasieg": 6.0,
+    "trafialatajacych": true,
+    "przebijaPancerz": false,
+    "kolor": "#a855f7",
+    "tekstura": "data/wieze/snajper.gif",
+    "teksturaPocisku": "data/pociski/snajper.png",
+    "ulepszenia": [
+      {
+        "opis": "Obrażenia: 60 -> 100",
+        "koszt": 120,
+        "obrazenia": 100
+      },
+      {
+        "opis": "Przebija pancerz",
+        "koszt": 200,
+        "przebijaPancerz": true
+      }
+    ]
+  }
+}

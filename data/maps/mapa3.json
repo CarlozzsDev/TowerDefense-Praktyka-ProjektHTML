@@ -1,0 +1,156 @@
+{
+  "id": "mapa3",
+  "name": "Mapa 3: Trudna",
+  "RozmiarMap": 64,
+  "grid": [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+    [3, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 4],
+    [0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ],
+  "punkty": [
+    { "x": 0, "y": 4 },
+    { "x": 7, "y": 4 },
+    { "x": 7, "y": 7 },
+    { "x": 11, "y": 7 },
+    { "x": 11, "y": 4 },
+    { "x": 19, "y": 4 }
+  ],
+  "fale": [
+    {
+      "odstep": 0.85,
+      "bonus": 25,
+      "wrogowie": [
+        { "typ": "Normal", "ilosc": 10 },
+        { "typ": "Fast", "ilosc": 4 }
+      ]
+    },
+    {
+      "odstep": 0.75,
+      "bonus": 25,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 12 },
+        { "typ": "Normal", "ilosc": 8 }
+      ]
+    },
+    {
+      "odstep": 0.7,
+      "bonus": 30,
+      "wrogowie": [
+        { "typ": "Normal", "ilosc": 10 },
+        { "typ": "Armor", "ilosc": 5 }
+      ]
+    },
+    {
+      "odstep": 0.65,
+      "bonus": 35,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 14 },
+        { "typ": "Fly", "ilosc": 6 }
+      ]
+    },
+    {
+      "odstep": 0.6,
+      "bonus": 65,
+      "wrogowie": [
+        { "typ": "Armor", "ilosc": 4 },
+        { "typ": "Fast", "ilosc": 10 },
+        { "typ": "Boss", "ilosc": 1 }
+      ]
+    },
+    {
+      "odstep": 0.55,
+      "bonus": 40,
+      "wrogowie": [
+        { "typ": "Armor", "ilosc": 8 },
+        { "typ": "Fly", "ilosc": 8 }
+      ]
+    },
+    {
+      "odstep": 0.5,
+      "bonus": 45,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 18 },
+        { "typ": "Fly", "ilosc": 10 }
+      ]
+    },
+    {
+      "odstep": 0.5,
+      "bonus": 50,
+      "wrogowie": [
+        { "typ": "Normal", "ilosc": 22 },
+        { "typ": "Armor", "ilosc": 8 }
+      ]
+    },
+    {
+      "odstep": 0.45,
+      "bonus": 55,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 16 },
+        { "typ": "Armor", "ilosc": 8 },
+        { "typ": "Fly", "ilosc": 12 }
+      ]
+    },
+    {
+      "odstep": 0.45,
+      "bonus": 100,
+      "wrogowie": [
+        { "typ": "Armor", "ilosc": 8 },
+        { "typ": "Fly", "ilosc": 10 },
+        { "typ": "Boss", "ilosc": 2 }
+      ]
+    },
+    {
+      "odstep": 0.4,
+      "bonus": 60,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 26 },
+        { "typ": "Fly", "ilosc": 14 }
+      ]
+    },
+    {
+      "odstep": 0.4,
+      "bonus": 65,
+      "wrogowie": [
+        { "typ": "Armor", "ilosc": 14 },
+        { "typ": "Fast", "ilosc": 16 }
+      ]
+    },
+    {
+      "odstep": 0.38,
+      "bonus": 70,
+      "wrogowie": [
+        { "typ": "Normal", "ilosc": 24 },
+        { "typ": "Armor", "ilosc": 10 },
+        { "typ": "Fly", "ilosc": 16 }
+      ]
+    },
+    {
+      "odstep": 0.35,
+      "bonus": 80,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 24 },
+        { "typ": "Armor", "ilosc": 12 },
+        { "typ": "Fly", "ilosc": 16 }
+      ]
+    },
+    {
+      "odstep": 0.35,
+      "bonus": 250,
+      "wrogowie": [
+        { "typ": "Fast", "ilosc": 20 },
+        { "typ": "Armor", "ilosc": 14 },
+        { "typ": "Fly", "ilosc": 16 },
+        { "typ": "Boss", "ilosc": 3 }
+      ]
+    }
+  ]
+}

@@ -1,13 +1,24 @@
 const KLUCZ_WYNIKOW = "td_tabela_wynikow";
 
-export function pobierzWyniki() {
-  const dane = localStorage.getItem(KLUCZ_WYNIKOW);
-  return dane ? JSON.parse(dane) : [];
+function pobierzWyniki() {
+  try {
+    const surowe = localStorage.getItem(KLUCZ_WYNIKOW);
+    return surowe ? JSON.parse(surowe) : [];
+  } catch {
+    return [];
+  }
 }
 
-export function zapiszWynik(gracz, mapa, wynik) {
-  const wyniki = pobierzWyniki();
-  wyniki.push({ gracz, mapa, wynik });
-  wyniki.sort((a, b) => b.wynik - a.wynik);
-  localStorage.setItem(KLUCZ_WYNIKOW, JSON.stringify(wyniki.slice(0, 10)));
+function zapiszWynik(gracz, mapa, wynik) {
+  const lista = pobierzWyniki();
+  lista.push({
+    gracz: gracz.trim() || "Anonim",
+    mapa: mapa,
+    wynik: Number(wynik),
+    data: new Date().toISOString()
+  });
+
+  lista.sort((a, b) => b.wynik - a.wynik);
+  const top10 = lista.slice(0, 10);
+  localStorage.setItem(KLUCZ_WYNIKOW, JSON.stringify(top10));
 }

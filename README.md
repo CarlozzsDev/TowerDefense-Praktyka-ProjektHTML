@@ -58,6 +58,6 @@ wyboru mapy i tabeli wyników w `index.html`.
 `pociski.js`, `przeciwnicy.js`, `waves.js`, `wieze.json`, ekran rozgrywki i
 ekran końca gry w `index.html`.
 
-
+---
 * PS. Przez słabe zapoznanie z GitHubem, podczas pisania kodu wszystkie pliki były wysyłane do Dawida co spowodowało nie wyświetlanie się commitów Poli i Mateusza na stronie. 
 * PPS. Wszystkie pull requesty zostały wysłane przez zarówno Pole jak i Mateusza po ukończeniu projektu.

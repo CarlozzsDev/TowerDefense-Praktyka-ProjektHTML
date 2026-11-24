@@ -2,12 +2,12 @@
   "Standard": {
     "id": "Standard",
     "nazwa": "Standard",
-    "opis": "Szybko strzela w jeden cel naziemny. Nie trafia latających.",
+    "opis": "Szybko strzela w jeden cel naziemny i powietrzny (50% obrażeń).",
     "koszt": 50,
     "obrazenia": 8,
     "szybkoscStrzalu": 2.0,
     "zasieg": 2.5,
-    "trafialatajacych": false,
+    "trafialatajacych": true,
     "kolor": "#3b82f6",
     "tekstura": "data/wieze/standard.gif",
     "teksturaPocisku": "data/pociski/standard.png",
@@ -31,7 +31,7 @@
     "koszt": 120,
     "obrazenia": 40,
     "szybkoscStrzalu": 0.5,
-    "zasieg": 2.0,
+    "zasieg": 2.5,
     "zasiegObszarowy": 1.0,
     "trafialatajacych": false,
     "kolor": "#ef4444",
@@ -53,22 +53,22 @@
   "Slow": {
     "id": "Slow",
     "nazwa": "Slow",
-    "opis": "Spowalnia wrogów (30% na 2s). Trafia latających.",
+    "opis": "Spowalnia wrogów (40% na 3s). Trafia latających.",
     "koszt": 80,
-    "obrazenia": 3,
+    "obrazenia": 10,
     "szybkoscStrzalu": 1.0,
     "zasieg": 2.0,
-    "spowolnienie": 0.3,
-    "czasSpowolnienia": 2.0,
+    "spowolnienie": 0.4,
+    "czasSpowolnienia": 3.0,
     "trafialatajacych": true,
     "kolor": "#38bdf8",
     "tekstura": "data/wieze/slow.gif",
     "teksturaPocisku": "data/pociski/slow.png",
     "ulepszenia": [
       {
-        "opis": "Spowolnienie: 30% -> 50%",
+        "opis": "Spowolnienie: 40% -> 60%",
         "koszt": 60,
-        "spowolnienie": 0.5
+        "spowolnienie": 0.6
       },
       {
         "opis": "Zasięg: 2.0 -> 3.0 kafelka",
@@ -81,9 +81,9 @@
     "id": "Snajper",
     "nazwa": "Snajper",
     "opis": "Duży zasięg, wolny strzał oraz duże obrażenia. Trafia latających.",
-    "koszt": 150,
+    "koszt": 200,
     "obrazenia": 60,
-    "szybkoscStrzalu": 0.33,
+    "szybkoscStrzalu": 0.25,
     "zasieg": 6.0,
     "trafialatajacych": true,
     "przebijaPancerz": false,
@@ -100,6 +100,33 @@
         "opis": "Przebija pancerz",
         "koszt": 200,
         "przebijaPancerz": true
+      }
+    ]
+  },
+  "Farma": {
+    "id": "Farma",
+    "nazwa": "Farma",
+    "opis": "Generuje dodatkowe pieniądze co 5 sekund.",
+    "koszt": 125,
+    "obrazenia": 0,
+    "szybkoscStrzalu": 0,
+    "zasieg": 0,
+    "generowanePieniadze": 5,
+    "interwalGenerowania": 5.0,
+    "trafialatajacych": false,
+    "kolor": "#facc15",
+    "tekstura": "data/wieze/farma.gif",
+    "teksturaPocisku": "",
+    "ulepszenia": [
+      {
+        "opis": "Generuje więcej pieniędzy: 5 -> 10",
+        "koszt": 80,
+        "generowanePieniadze": 10
+      },
+      {
+        "opis": "Generuje jeszcze więcej pieniędzy: 10 -> 20",
+        "koszt": 150,
+        "generowanePieniadze": 20
       }
     ]
   }

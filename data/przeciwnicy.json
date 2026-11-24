@@ -41,9 +41,9 @@
   "Fly": {
     "id": "Fly",
     "nazwa": "Fly",
-    "hp": 35,
+    "hp": 25,
     "predkosc": 1.4,
-    "nagroda": 10,
+    "nagroda": 12,
     "obrazeniaBazy": 1,
     "czyLatajacy": true,
     "odpornoscNaSpowolnienie": false,
@@ -54,7 +54,7 @@
   "Boss": {
     "id": "Boss",
     "nazwa": "Boss",
-    "hp": 1200,
+    "hp": 1000,
     "predkosc": 0.5,
     "nagroda": 100,
     "obrazeniaBazy": 5,

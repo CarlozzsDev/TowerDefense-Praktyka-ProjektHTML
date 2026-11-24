@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Tower Defense</title>
   <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="data/dane_lokalne.js" defer></script>
   <script src="js/storage.js" defer></script>
   <script src="js/audio.js" defer></script>
@@ -20,12 +21,13 @@
   <!-- 1. MENU GŁÓWNE Z ŻYWĄ DIORAMĄ W TLE -->
   <section id="ekran-menu" class="ekran">
     <canvas id="tlo-menu-canvas" aria-hidden="true"></canvas>
+    <div id="tlo-menu-gify" aria-hidden="true"></div>
 
     <div class="karta-tytulowa">
       <div class="nity-gorne" aria-hidden="true"><span></span><span></span></div>
       <p class="podtytul-kroniki">SiDLY Praktyki</p>
       <h1>Tower Defense</h1>
-      <p class="opis-tytulowy">Stawiaj wieże i odeprzyj 15 fal wrogów.</p>
+      <p class="opis-tytulowy">Stawiaj wieże i odeprzyj fale wrogów.</p>
 
       <nav class="przyciski-menu">
         <button id="btn-wybor-mapy" class="btn-glowny">Rozpocznij grę</button>
@@ -56,8 +58,8 @@
           <canvas class="podglad-mapy" width="160" height="96"></canvas>
           <div class="info-mapy">
             <span class="trudnosc-tag trudnosc-latwa">Poziom I</span>
-            <h3>Mapa 1: Łatwa</h3>
-            <p>Prosta mapa z wieloma zakrętami.</p>
+            <h3>Mapa 1: Dolina</h3>
+            <p>Długa trasa z zakrętami i wieloma miejscami budowy.</p>
           </div>
           <button class="btn-mapa btn-glowny" data-mapa="data/maps/mapa1.json">Broń odcinka</button>
         </article>
@@ -80,6 +82,16 @@
             <p>Krótka i prosta mapa.</p>
           </div>
           <button class="btn-mapa btn-glowny" data-mapa="data/maps/mapa3.json">Broń odcinka</button>
+        </article>
+
+        <article class="karta-mapy" data-mapa="data/maps/endless.json">
+          <canvas class="podglad-mapy" width="160" height="96"></canvas>
+          <div class="info-mapy">
+            <span class="trudnosc-tag trudnosc-trudna">Endless</span>
+            <h3>Mapa Endless</h3>
+            <p>Nieskończona mapa z rosnącym poziomem trudności.</p>
+          </div>
+          <button class="btn-mapa btn-glowny" data-mapa="data/maps/endless.json">Broń odcinka</button>
         </article>
       </div>
     </div>
@@ -115,7 +127,7 @@
       </div>
 
       <p class="wstep-ksiegi">
-        Chroń bazę przed <strong>15 falami</strong> (20 punktów wytrzymałości bazy). Kliknij świecące pole na mapie, aby postawić lub ulepszyć wieżę. Jednostki naziemne podążają drogą, natomiast <strong>latające</strong> lecą w linii prostej prosto do bazy.
+        Chroń bazę przed <strong>15 falami</strong> (lub bez limitu w trybie <strong>Endless</strong>). Kliknij dowolne pole na mapie, aby postawić lub ulepszyć wieżę. Jednostki naziemne podążają drogą, natomiast <strong>latające</strong> lecą w linii prostej prosto do bazy.
       </p>
 
       <div class="kolumny-ksiegi">
@@ -126,7 +138,7 @@
               <img src="data/wieze/standard.gif" alt="Standard">
               <div>
                 <strong>Standard</strong>
-                <span>Szybki ostrzał pojedynczego celu naziemnego.</span>
+                <span>Szybki ostrzał pojedynczego celu (50% obrażeń w cele latające).</span>
               </div>
             </li>
             <li>
@@ -140,7 +152,7 @@
               <img src="data/wieze/slow.gif" alt="Slow">
               <div>
                 <strong>Slow</strong>
-                <span>Spowalnia wrogów o 30-50% na 2s. Atakuje również cele latające.</span>
+                <span>Spowalnia wrogów o 40-60% na 3s. Atakuje również cele latające.</span>
               </div>
             </li>
             <li>
@@ -148,6 +160,13 @@
               <div>
                 <strong>Snajper</strong>
                 <span>Ogromny zasięg, bije cele latające, na 2. ulepszeniu przebija pancerz.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/wieze/farma.gif" alt="Farma">
+              <div>
+                <strong>Farma</strong>
+                <span>Generuje złoto co 5 sekund.</span>
               </div>
             </li>
           </ul>
@@ -188,7 +207,7 @@
               <img src="data/przeciwnicy/boss.gif" alt="Boss">
               <div>
                 <strong>Boss</strong>
-                <span>Pojawia się co 5 fal. Odporny na spowolnienie.</span>
+                <span>Pojawia się co 5 fal (co 4 w Endless). Odporny na spowolnienie.</span>
               </div>
             </li>
           </ul>
@@ -243,7 +262,7 @@
       </div>
       <aside id="panel-sklepu">
         <h3>Sklep Wież</h3>
-        <p class="podpowiedz-sklepu">Kliknij podświetlone pole na mapie, aby postawić wieżę.</p>
+        <p class="podpowiedz-sklepu">Kliknij pole na mapie, aby postawić wieżę.</p>
       </aside>
     </div>
   </section>

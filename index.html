@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Tower Defense</title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="data/dane_lokalne.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/audio.js" defer></script>
+  <script src="js/tekstury.js" defer></script>
+  <script src="js/wieze.js" defer></script>
+  <script src="js/przeciwnicy.js" defer></script>
+  <script src="js/pociski.js" defer></script>
+  <script src="js/waves.js" defer></script>
+  <script src="js/render.js" defer></script>
+  <script src="js/gra.js" defer></script>
+</head>
+<body>
+
+  <!-- 1. MENU GŁÓWNE Z ŻYWĄ DIORAMĄ W TLE -->
+  <section id="ekran-menu" class="ekran">
+    <canvas id="tlo-menu-canvas" aria-hidden="true"></canvas>
+    <div id="tlo-menu-gify" aria-hidden="true"></div>
+
+    <div class="karta-tytulowa">
+      <div class="nity-gorne" aria-hidden="true"><span></span><span></span></div>
+      <p class="podtytul-kroniki">SiDLY Praktyki</p>
+      <h1>Tower Defense</h1>
+      <p class="opis-tytulowy">Stawiaj wieże i odeprzyj fale wrogów.</p>
+
+      <nav class="przyciski-menu">
+        <button id="btn-wybor-mapy" class="btn-glowny">Rozpocznij grę</button>
+        <button id="btn-tabela-wynikow">Zapis wyników</button>
+        <button id="btn-instrukcja">Spis jednostek</button>
+      </nav>
+    </div>
+  </section>
+
+  <!-- 2. WYBÓR MAPY Z MINIATURKAMI -->
+  <section id="ekran-wybor-mapy" class="ekran ukryty">
+    <div class="panel-okno panel-szeroki">
+      <div class="naglowek-okna">
+        <h2>Wybór mapy</h2>
+        <button class="btn-powrot btn-maly">Wróć</button>
+      </div>
+
+      <div class="pole-nicku">
+        <label for="input-nick">Imię gracza:</label>
+        <div class="wiersz-inputu">
+          <input type="text" id="input-nick" placeholder="Wpisz swoją nazwę" maxlength="15">
+          <small id="blad-nicku" class="ukryty">Podaj nazwę gracza przed rozpoczęciem gry.</small>
+        </div>
+      </div>
+
+      <div id="lista-map" class="siatka-map">
+        <article class="karta-mapy" data-mapa="data/maps/mapa1.json">
+          <canvas class="podglad-mapy" width="160" height="96"></canvas>
+          <div class="info-mapy">
+            <span class="trudnosc-tag trudnosc-latwa">Poziom I</span>
+            <h3>Mapa 1: Dolina</h3>
+            <p>Długa trasa z zakrętami i wieloma miejscami budowy.</p>
+          </div>
+          <button class="btn-mapa btn-glowny" data-mapa="data/maps/mapa1.json">Broń odcinka</button>
+        </article>
+
+        <article class="karta-mapy" data-mapa="data/maps/mapa2.json">
+          <canvas class="podglad-mapy" width="160" height="96"></canvas>
+          <div class="info-mapy">
+            <span class="trudnosc-tag trudnosc-srednia">Poziom II</span>
+            <h3>Mapa 2: Średnia</h3>
+            <p>Średnia mapa z kilkoma zakrętami.</p>
+          </div>
+          <button class="btn-mapa btn-glowny" data-mapa="data/maps/mapa2.json">Broń odcinka</button>
+        </article>
+
+        <article class="karta-mapy" data-mapa="data/maps/mapa3.json">
+          <canvas class="podglad-mapy" width="160" height="96"></canvas>
+          <div class="info-mapy">
+            <span class="trudnosc-tag trudnosc-trudna">Poziom III</span>
+            <h3>Mapa 3: Trudna</h3>
+            <p>Krótka i prosta mapa.</p>
+          </div>
+          <button class="btn-mapa btn-glowny" data-mapa="data/maps/mapa3.json">Broń odcinka</button>
+        </article>
+
+        <article class="karta-mapy" data-mapa="data/maps/endless.json">
+          <canvas class="podglad-mapy" width="160" height="96"></canvas>
+          <div class="info-mapy">
+            <span class="trudnosc-tag trudnosc-trudna">Endless</span>
+            <h3>Mapa Endless</h3>
+            <p>Nieskończona mapa z rosnącym poziomem trudności.</p>
+          </div>
+          <button class="btn-mapa btn-glowny" data-mapa="data/maps/endless.json">Broń odcinka</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TABELA WYNIKÓW -->
+  <section id="ekran-wyniki" class="ekran ukryty">
+    <div class="panel-okno">
+      <div class="naglowek-okna">
+        <h2>Zapis najlepszych wyników</h2>
+        <button class="btn-powrot btn-maly">Wróć</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Gracz</th>
+            <th>Mapa</th>
+            <th>Punkty</th>
+          </tr>
+        </thead>
+        <tbody id="lista-wynikow"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. INSTRUKCJA / BESTIARIUSZ ZE SPRITE'AMI -->
+  <section id="ekran-instrukcja" class="ekran ukryty">
+    <div class="panel-okno panel-szeroki">
+      <div class="naglowek-okna">
+        <h2>Spis jednostek</h2>
+        <button class="btn-powrot btn-maly">Wróć</button>
+      </div>
+
+      <p class="wstep-ksiegi">
+        Chroń bazę przed <strong>15 falami</strong> (lub bez limitu w trybie <strong>Endless</strong>). Kliknij dowolne pole na mapie, aby postawić lub ulepszyć wieżę. Jednostki naziemne podążają drogą, natomiast <strong>latające</strong> lecą w linii prostej prosto do bazy.
+      </p>
+
+      <div class="kolumny-ksiegi">
+        <div class="sekcja-ksiegi">
+          <h3>Spis wież</h3>
+          <ul class="lista-jednostek">
+            <li>
+              <img src="data/wieze/standard.gif" alt="Standard">
+              <div>
+                <strong>Standard</strong>
+                <span>Szybki ostrzał pojedynczego celu (50% obrażeń w cele latające).</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/wieze/heavy.gif" alt="Heavy">
+              <div>
+                <strong>Heavy</strong>
+                <span>Ciężkie pociski obszarowe (promień 1-1.5 kafelka), tylko cele naziemne.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/wieze/slow.gif" alt="Slow">
+              <div>
+                <strong>Slow</strong>
+                <span>Spowalnia wrogów o 40-60% na 3s. Atakuje również cele latające.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/wieze/snajper.gif" alt="Snajper">
+              <div>
+                <strong>Snajper</strong>
+                <span>Ogromny zasięg, bije cele latające, na 2. ulepszeniu przebija pancerz.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/wieze/farma.gif" alt="Farma">
+              <div>
+                <strong>Farma</strong>
+                <span>Generuje złoto co 5 sekund.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sekcja-ksiegi">
+          <h3>Spis wrogów</h3>
+          <ul class="lista-jednostek">
+            <li>
+              <img src="data/przeciwnicy/normal.gif" alt="Normal">
+              <div>
+                <strong>Normal</strong>
+                <span>Podstawowa jednostka o zbalansowanej wytrzymałości.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/przeciwnicy/fast.gif" alt="Fast">
+              <div>
+                <strong>Fast</strong>
+                <span>Bardzo szybka jednostka, trudna do trafienia bez spowolnienia.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/przeciwnicy/armor.gif" alt="Armor">
+              <div>
+                <strong>Armor</strong>
+                <span>Otrzymuje 50% obrażeń wieży Standard.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/przeciwnicy/fly.gif" alt="Fly">
+              <div>
+                <strong>Fly</strong>
+                <span>Jednostka powietrzna - ignoruje zakręty drogi.</span>
+              </div>
+            </li>
+            <li>
+              <img src="data/przeciwnicy/boss.gif" alt="Boss">
+              <div>
+                <strong>Boss</strong>
+                <span>Pojawia się co 5 fal (co 4 w Endless). Odporny na spowolnienie.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. EKRAN GRY -->
+  <section id="ekran-gra" class="ekran ukryty">
+    <header id="hud-gorny">
+      <div class="zasoby-hud">
+        <div class="miernik-hud miernik-fala">
+          <span class="etykieta-hud">Fala</span>
+          <strong id="licznik-fal">1/15</strong>
+        </div>
+        <div class="miernik-hud miernik-zloto">
+          <span class="etykieta-hud">Złoto</span>
+          <strong id="licznik-zlota">150</strong>
+        </div>
+        <div class="miernik-hud miernik-zycia">
+          <span class="etykieta-hud">HP</span>
+          <strong id="licznik-zyc">20</strong>
+        </div>
+      </div>
+
+      <div class="akcje-hud">
+        <button id="btn-nastepna-fala">Start fali 1</button>
+        <button id="btn-pauza">Pauza</button>
+        <button id="btn-przyspieszenie">x2</button>
+        <div class="kontener-dzwieku">
+          <button id="btn-dzwiek">Dźwięk ▾</button>
+          <div id="menu-dzwieku" class="ukryty">
+            <div class="wiersz-suwaka">
+              <label for="suwak-muzyka">Muzyka: <strong id="wartosc-muzyka">25%</strong></label>
+              <input type="range" id="suwak-muzyka" min="0" max="100" value="25">
+            </div>
+            <div class="wiersz-suwaka">
+              <label for="suwak-efekty">Efekty: <strong id="wartosc-efekty">80%</strong></label>
+              <input type="range" id="suwak-efekty" min="0" max="100" value="80">
+            </div>
+            <button id="btn-wycisz-wszystko">Wycisz wszystko</button>
+          </div>
+        </div>
+        <button id="btn-wyjdz-z-gry" class="btn-powrot-hud">Menu</button>
+      </div>
+    </header>
+
+    <div id="obszar-gry">
+      <div class="rama-planszy">
+        <canvas id="plansza"></canvas>
+      </div>
+      <aside id="panel-sklepu">
+        <h3>Sklep Wież</h3>
+        <p class="podpowiedz-sklepu">Kliknij pole na mapie, aby postawić wieżę.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 6. EKRAN KOŃCA GRY -->
+  <section id="ekran-koniec-gry" class="ekran ukryty">
+    <div class="panel-okno karta-konca">
+      <h1 id="tytul-koniec-gry">Koniec bitwy</h1>
+      <p id="opis-koniec-gry" class="podsumowanie-opis">Podsumowanie rozgrywki</p>
+
+      <dl class="statystyki-koncowe">
+        <div>
+          <dt>Gracz</dt>
+          <dd id="koniec-gracz">-</dd>
+        </div>
+        <div>
+          <dt>Mapa</dt>
+          <dd id="koniec-mapa">-</dd>
+        </div>
+        <div>
+          <dt>Wynik końcowy</dt>
+          <dd id="koniec-wynik" class="wynik-zloto">0 pkt</dd>
+        </div>
+      </dl>
+
+      <div class="przyciski-menu">
+        <button id="btn-zagraj-ponownie" class="btn-glowny">Zagraj ponownie</button>
+        <button id="btn-koniec-wyniki">Tabela wyników</button>
+        <button class="btn-powrot">Menu główne</button>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+{
+  "Normal": {
+    "id": "Normal",
+    "nazwa": "Normal",
+    "hp": 40,
+    "predkosc": 1.0,
+    "nagroda": 5,
+    "obrazeniaBazy": 1,
+    "czyLatajacy": false,
+    "odpornoscNaSpowolnienie": false,
+    "odpornoscStandard": 1.0,
+    "kolor": "#84a98c",
+    "tekstura": "data/przeciwnicy/normal.gif"
+  },
+  "Fast": {
+    "id": "Fast",
+    "nazwa": "Fast",
+    "hp": 20,
+    "predkosc": 2.2,
+    "nagroda": 6,
+    "obrazeniaBazy": 1,
+    "czyLatajacy": false,
+    "odpornoscNaSpowolnienie": false,
+    "odpornoscStandard": 1.0,
+    "kolor": "#facc15",
+    "tekstura": "data/przeciwnicy/fast.gif"
+  },
+  "Armor": {
+    "id": "Armor",
+    "nazwa": "Armor",
+    "hp": 150,
+    "predkosc": 0.6,
+    "nagroda": 15,
+    "obrazeniaBazy": 2,
+    "czyLatajacy": false,
+    "odpornoscNaSpowolnienie": false,
+    "odpornoscStandard": 0.5,
+    "kolor": "#64748b",
+    "tekstura": "data/przeciwnicy/armor.gif"
+  },
+  "Fly": {
+    "id": "Fly",
+    "nazwa": "Fly",
+    "hp": 25,
+    "predkosc": 1.4,
+    "nagroda": 12,
+    "obrazeniaBazy": 1,
+    "czyLatajacy": true,
+    "odpornoscNaSpowolnienie": false,
+    "odpornoscStandard": 1.0,
+    "kolor": "#38bdf8",
+    "tekstura": "data/przeciwnicy/fly.gif"
+  },
+  "Boss": {
+    "id": "Boss",
+    "nazwa": "Boss",
+    "hp": 1000,
+    "predkosc": 0.5,
+    "nagroda": 100,
+    "obrazeniaBazy": 5,
+    "czyLatajacy": false,
+    "odpornoscNaSpowolnienie": true,
+    "odpornoscStandard": 1.0,
+    "kolor": "#dc2626",
+    "tekstura": "data/przeciwnicy/boss.gif"
+  }
+}

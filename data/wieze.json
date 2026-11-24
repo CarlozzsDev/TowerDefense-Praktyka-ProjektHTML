@@ -1,0 +1,133 @@
+{
+  "Standard": {
+    "id": "Standard",
+    "nazwa": "Standard",
+    "opis": "Szybko strzela w jeden cel naziemny i powietrzny (50% obrażeń).",
+    "koszt": 50,
+    "obrazenia": 8,
+    "szybkoscStrzalu": 2.0,
+    "zasieg": 2.5,
+    "trafialatajacych": true,
+    "kolor": "#3b82f6",
+    "tekstura": "data/wieze/standard.gif",
+    "teksturaPocisku": "data/pociski/standard.png",
+    "ulepszenia": [
+      {
+        "opis": "Obrażenia: 8 -> 12",
+        "koszt": 40,
+        "obrazenia": 12
+      },
+      {
+        "opis": "Szybkość: 2.0 -> 3.0 strz./s",
+        "koszt": 70,
+        "szybkoscStrzalu": 3.0
+      }
+    ]
+  },
+  "Heavy": {
+    "id": "Heavy",
+    "nazwa": "Heavy",
+    "opis": "Wolne strzały oraz duże obrażenia obszarowe (1 kafelek).",
+    "koszt": 120,
+    "obrazenia": 40,
+    "szybkoscStrzalu": 0.5,
+    "zasieg": 2.5,
+    "zasiegObszarowy": 1.0,
+    "trafialatajacych": false,
+    "kolor": "#ef4444",
+    "tekstura": "data/wieze/heavy.gif",
+    "teksturaPocisku": "data/pociski/heavy.png",
+    "ulepszenia": [
+      {
+        "opis": "Obszar wybuchu: 1.0 -> 1.5 kafelka",
+        "koszt": 90,
+        "zasiegObszarowy": 1.5
+      },
+      {
+        "opis": "Obrażenia: 40 -> 70",
+        "koszt": 150,
+        "obrazenia": 70
+      }
+    ]
+  },
+  "Slow": {
+    "id": "Slow",
+    "nazwa": "Slow",
+    "opis": "Spowalnia wrogów (40% na 3s). Trafia latających.",
+    "koszt": 80,
+    "obrazenia": 10,
+    "szybkoscStrzalu": 1.0,
+    "zasieg": 2.0,
+    "spowolnienie": 0.4,
+    "czasSpowolnienia": 3.0,
+    "trafialatajacych": true,
+    "kolor": "#38bdf8",
+    "tekstura": "data/wieze/slow.gif",
+    "teksturaPocisku": "data/pociski/slow.png",
+    "ulepszenia": [
+      {
+        "opis": "Spowolnienie: 40% -> 60%",
+        "koszt": 60,
+        "spowolnienie": 0.6
+      },
+      {
+        "opis": "Zasięg: 2.0 -> 3.0 kafelka",
+        "koszt": 100,
+        "zasieg": 3.0
+      }
+    ]
+  },
+  "Snajper": {
+    "id": "Snajper",
+    "nazwa": "Snajper",
+    "opis": "Duży zasięg, wolny strzał oraz duże obrażenia. Trafia latających.",
+    "koszt": 200,
+    "obrazenia": 60,
+    "szybkoscStrzalu": 0.25,
+    "zasieg": 6.0,
+    "trafialatajacych": true,
+    "przebijaPancerz": false,
+    "kolor": "#a855f7",
+    "tekstura": "data/wieze/snajper.gif",
+    "teksturaPocisku": "data/pociski/snajper.png",
+    "ulepszenia": [
+      {
+        "opis": "Obrażenia: 60 -> 100",
+        "koszt": 120,
+        "obrazenia": 100
+      },
+      {
+        "opis": "Przebija pancerz",
+        "koszt": 200,
+        "przebijaPancerz": true
+      }
+    ]
+  },
+  "Farma": {
+    "id": "Farma",
+    "nazwa": "Farma",
+    "opis": "Generuje dodatkowe pieniądze co 5 sekund.",
+    "koszt": 125,
+    "obrazenia": 0,
+    "szybkoscStrzalu": 0,
+    "zasieg": 0,
+    "generowanePieniadze": 5,
+    "interwalGenerowania": 5.0,
+    "trafialatajacych": false,
+    "kolor": "#facc15",
+    "tekstura": "data/wieze/farma.gif",
+    "teksturaPocisku": "",
+    "ulepszenia": [
+      {
+        "opis": "Generuje więcej pieniędzy: 5 -> 10",
+        "koszt": 80,
+        "generowanePieniadze": 10
+      },
+      {
+        "opis": "Generuje jeszcze więcej pieniędzy: 10 -> 20",
+        "koszt": 150,
+        "generowanePieniadze": 20
+      }
+    ]
+  }
+}

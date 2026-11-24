@@ -53,8 +53,13 @@ class Przeciwnik {
     if (this.czyMartwy || this.dotarlDoBazy) return false;
 
     let finalneObrazenia = ilosc;
-    if (typWiezy === "Standard" && !przebijaPancerz) {
-      finalneObrazenia *= this.odpornoscStandard;
+    if (typWiezy === "Standard") {
+      if (!przebijaPancerz) {
+        finalneObrazenia *= this.odpornoscStandard;
+      }
+      if (this.czyLatajacy) {
+        finalneObrazenia *= 0.5;
+      }
     }
 
     this.hp -= finalneObrazenia;

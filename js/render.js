@@ -189,59 +189,6 @@ class Renderer {
 
     return true;
   }
-  aktualizujElementGif(obiekt, sciezka, srodekX, srodekY, szerokosc, wysokosc, zIndex = "1", filtr = "none") {
-    const czyGif = sciezka && sciezka.toLowerCase().endsWith(".gif");
-
-    if (!czyGif) {
-      const stary = this.elementyGif.get(obiekt);
-      if (stary) {
-        stary.img.remove();
-        this.elementyGif.delete(obiekt);
-      }
-      return false;
-    }
-
-    const zrodlo = this.pobierzZcacheowanyGif(sciezka);
-    if (!zrodlo.gotowy || zrodlo.blad) {
-      return false;
-    }
-
-    let wpis = this.elementyGif.get(obiekt);
-    if (!wpis) {
-      const img = zrodlo.img.cloneNode();
-      img.alt = obiekt.nazwa || "";
-      img.style.position = "absolute";
-      img.style.imageRendering = "pixelated";
-      img.style.pointerEvents = "none";
-
-      wpis = { img, sciezka };
-      this.warstwaGif.appendChild(img);
-      this.elementyGif.set(obiekt, wpis);
-    } else if (wpis.sciezka !== sciezka) {
-      wpis.sciezka = sciezka;
-      wpis.img.src = sciezka;
-      if (!wpis.img.parentElement) {
-        this.warstwaGif.appendChild(wpis.img);
-      }
-    }
-
-    const { przesuniecieX, przesuniecieY } = zrodlo.korekta;
-    const procentX = (srodekX / this.canvas.width) * 100;
-    const procentY = (srodekY / this.canvas.height) * 100;
-    const procentSzer = (szerokosc / this.canvas.width) * 100;
-    const procentWys = (wysokosc / this.canvas.height) * 100;
-
-    wpis.img.style.left = `${procentX}%`;
-    wpis.img.style.top = `${procentY}%`;
-    wpis.img.style.width = `${procentSzer}%`;
-    wpis.img.style.height = `${procentWys}%`;
-    wpis.img.style.zIndex = zIndex;
-    wpis.img.style.filter = filtr;
-    wpis.img.style.transformOrigin = `${-przesuniecieX}% ${-przesuniecieY}%`;
-    wpis.img.style.transform = `translate(${przesuniecieX}%, ${przesuniecieY}%)`;
-
-    return true;
-  }
 
   pobierzObrazek(sciezka) {
     if (!sciezka) return null;
@@ -295,11 +242,12 @@ class Renderer {
           this.hoveredTile &&
           this.hoveredTile.x === x &&
           this.hoveredTile.y === y &&
-          typ === 2
+          typ === 0
         ) {
           this.ctx.strokeStyle = "#f10404";
-          this.ctx.lineWidth = 4;
-          this.ctx.strokeRect(x * size + 2, y * size + 2, size - 4, size - 4);
+          const gruboscRamki = Math.max(2, Math.round(size * 0.04));
+          this.ctx.lineWidth = gruboscRamki;
+          this.ctx.strokeRect(x * size + gruboscRamki, y * size + gruboscRamki, size - 2 * gruboscRamki, size - 2 * gruboscRamki);
         }
 
         if (
@@ -308,8 +256,9 @@ class Renderer {
           this.selectedTile.y === y
         ) {
           this.ctx.strokeStyle = "#e0a832";
-          this.ctx.lineWidth = 4;
-          this.ctx.strokeRect(x * size + 2, y * size + 2, size - 4, size - 4);
+          const gruboscRamki = Math.max(2, Math.round(size * 0.04));
+          this.ctx.lineWidth = gruboscRamki;
+          this.ctx.strokeRect(x * size + gruboscRamki, y * size + gruboscRamki, size - 2 * gruboscRamki, size - 2 * gruboscRamki);
         }
       }
     }
@@ -405,12 +354,15 @@ class Renderer {
 
     if (wieza.poziom > 0) {
       this.ctx.fillStyle = "#e0a832";
+      const odstep = size * 0.25;
+      const startX = srodekX - ((wieza.poziom - 1) * odstep) / 2;
+      const promienKropki = Math.max(2, size * 0.08);
       for (let i = 0; i < wieza.poziom; i++) {
         this.ctx.beginPath();
         this.ctx.arc(
-          srodekX - 6 + i * 12,
+          startX + i * odstep,
           srodekY + size * 0.36,
-          3.5,
+          promienKropki,
           0,
           Math.PI * 2
         );

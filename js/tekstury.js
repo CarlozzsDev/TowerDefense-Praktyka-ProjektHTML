@@ -54,7 +54,6 @@ class MapaGry {
     this.id = "";
     this.name = "";
     this.RozmiarMap = 64;
-    this.mnoznikBossa = 1.0;
     this.grid = [];
     this.punkty = [];
     this.fale = [];
@@ -68,7 +67,6 @@ class MapaGry {
     this.id = dane.id;
     this.name = dane.name;
     this.RozmiarMap = dane.RozmiarMap || dane.tileSize || 64;
-    this.mnoznikBossa = dane.mnoznikBossa !== undefined ? Number(dane.mnoznikBossa) : 1.0;
     this.grid = dane.grid;
     this.punkty = dane.punkty || [];
     this.fale = dane.fale || [];
